@@ -1,11 +1,12 @@
 
 <h1 align="center">Event Notification App</h1>
 
-<p align="center">
- Create Events and Invite Participants with Automated Notifications
-</p>
+<img width="100%" src="https://github.com/arther-upton/event-notification-app/assets/155370738/e9f392b6-eb79-4e7a-8528-f209f9980eb4">
 
-<br/>
+<h3 align="center">
+ Create Events and Invite Participants with Automated Notifications
+</h3>
+
 
 ## Tech Stack
 
