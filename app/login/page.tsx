@@ -108,12 +108,12 @@ export default function Login({
           </button>
           <button
             formAction={signUp}
-            className="border border-foreground/20 rounded-md px-4 py-2 text-foreground mb-2"
+            className="border border-foreground/20 rounded-md px-4 py-2 text-foreground mb-2 hover:bg-orange-600"
           >
             Sign Up
           </button>
           {searchParams?.message && (
-            <p className="mt-4 p-4 bg-foreground/10 text-foreground text-center">
+            <p className="mt-4 p-4 bg-foreground/20 text-foreground text-center rounded-md">
               {searchParams.message}
             </p>
           )}
