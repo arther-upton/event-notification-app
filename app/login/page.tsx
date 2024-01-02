@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { headers, cookies } from 'next/headers'
 import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
+import EventifyLogo from '@/components/EventifyLogo'
 
 export default function Login({
   searchParams,
@@ -77,8 +78,10 @@ export default function Login({
 
       <div className="flex flex-col w-full py-8 px-8 sm:max-w-md justify-center gap-2 my-auto bg-white/25 rounded-xl shadow-lg backdrop-blur-xl">
 
+        <EventifyLogo />
+        
         <form
-          className="animate-in flex-1 flex flex-col w-full justify-center gap-2 text-foreground"
+          className="animate-in flex-1 flex flex-col w-full justify-center gap-2 text-foreground mt-3"
           action={signIn}
         >
           <label className="text-lg font-semibold" htmlFor="email">
