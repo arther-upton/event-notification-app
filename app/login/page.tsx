@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { headers, cookies } from 'next/headers'
 import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
+import EventifyLogo from '@/components/EventifyLogo'
 
 export default function Login({
   searchParams,
@@ -53,10 +54,10 @@ export default function Login({
   }
 
   return (
-    <div className="flex-1 flex flex-col w-full px-8 sm:max-w-md justify-center gap-2">
+    <>
       <Link
         href="/"
-        className="absolute left-8 top-8 py-2 px-4 rounded-md no-underline text-foreground bg-btn-background hover:bg-btn-background-hover flex items-center group text-sm"
+        className="absolute left-8 top-8 py-2 px-4 rounded-md no-underline text-foreground bg-orange-600 backdrop-blur-xl hover:bg-white/30 flex items-center group text-sm"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -75,44 +76,49 @@ export default function Login({
         Back
       </Link>
 
-      <form
-        className="animate-in flex-1 flex flex-col w-full justify-center gap-2 text-foreground"
-        action={signIn}
-      >
-        <label className="text-md" htmlFor="email">
-          Email
-        </label>
-        <input
-          className="rounded-md px-4 py-2 bg-inherit border mb-6"
-          name="email"
-          placeholder="you@example.com"
-          required
-        />
-        <label className="text-md" htmlFor="password">
-          Password
-        </label>
-        <input
-          className="rounded-md px-4 py-2 bg-inherit border mb-6"
-          type="password"
-          name="password"
-          placeholder="••••••••"
-          required
-        />
-        <button className="bg-green-700 rounded-md px-4 py-2 text-foreground mb-2">
-          Sign In
-        </button>
-        <button
-          formAction={signUp}
-          className="border border-foreground/20 rounded-md px-4 py-2 text-foreground mb-2"
+      <div className="flex flex-col w-full py-8 px-8 sm:max-w-md justify-center gap-2 my-auto bg-white/25 rounded-xl shadow-lg backdrop-blur-xl">
+
+        <EventifyLogo />
+        
+        <form
+          className="animate-in flex-1 flex flex-col w-full justify-center gap-2 text-foreground mt-3"
+          action={signIn}
         >
-          Sign Up
-        </button>
-        {searchParams?.message && (
-          <p className="mt-4 p-4 bg-foreground/10 text-foreground text-center">
-            {searchParams.message}
-          </p>
-        )}
-      </form>
-    </div>
+          <label className="text-lg font-semibold" htmlFor="email">
+            Email
+          </label>
+          <input
+            className="rounded-md px-4 py-2 bg-inherit border-2 mb-6 placeholder-white placeholder-opacity-50 focus:outline-fuchsia-300"
+            name="email"
+            placeholder="you@example.com"
+            required
+          />
+          <label className="text-lg font-semibold" htmlFor="password">
+            Password
+          </label>
+          <input
+            className="rounded-md px-4 py-2 bg-inherit border-2 mb-6 placeholder-white placeholder-opacity-50 focus:outline-fuchsia-300"
+            type="password"
+            name="password"
+            placeholder="••••••••"
+            required
+          />
+          <button className="bg-orange-600 rounded-md px-4 py-2 text-foreground mb-2">
+            Sign In
+          </button>
+          <button
+            formAction={signUp}
+            className="border border-foreground/20 rounded-md px-4 py-2 text-foreground mb-2"
+          >
+            Sign Up
+          </button>
+          {searchParams?.message && (
+            <p className="mt-4 p-4 bg-foreground/10 text-foreground text-center">
+              {searchParams.message}
+            </p>
+          )}
+        </form>
+      </div>
+    </>
   )
 }
