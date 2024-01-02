@@ -23,7 +23,7 @@
 
 ## Demo
 
-Live WIP demo available soon
+View the Live WIP Demo at: [event-notification-app.vercel.app](https://event-notification-app.vercel.app/)
 
 ## Clone and run locally
 
