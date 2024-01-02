@@ -2,20 +2,12 @@
 <h1 align="center">Event Notification App</h1>
 
 <p align="center">
- The fastest way to build apps with Next.js and Supabase
+ Create Events and Invite Participants with Automated Notifications
 </p>
 
-<p align="center">
-  <a href="#features"><strong>Features</strong></a> ·
-  <a href="#demo"><strong>Demo</strong></a> ·
-  <a href="#deploy-to-vercel"><strong>Deploy to Vercel</strong></a> ·
-  <a href="#clone-and-run-locally"><strong>Clone and run locally</strong></a> ·
-  <a href="#feedback-and-issues"><strong>Feedback and issues</strong></a>
-  <a href="#more-supabase-examples"><strong>More Examples</strong></a>
-</p>
 <br/>
 
-## Tech
+## Tech Stack
 
 - Next.js 14
 - TypeScript
@@ -31,7 +23,7 @@
 
 ## Demo
 
-You can view a fully working demo at [demo-nextjs-with-supabase.vercel.app](https://demo-nextjs-with-supabase.vercel.app/).
+Live WIP demo available soon
 
 ## Clone and run locally
 
