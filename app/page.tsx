@@ -1,9 +1,10 @@
 import DeployButton from '../components/DeployButton'
-import AuthButton from '../components/AuthButton'
-import { createClient } from '@/utils/supabase/server'
 import ConnectSupabaseSteps from '@/components/ConnectSupabaseSteps'
 import SignUpUserSteps from '@/components/SignUpUserSteps'
 import Header from '@/components/Header'
+import Link from 'next/link'
+import AuthButton from '../components/AuthButton'
+import { createClient } from '@/utils/supabase/server'
 import { cookies } from 'next/headers'
 import GithubIcon from '@/components/GithubIcon'
 import SupabaseLogo from '@/components/SupabaseLogo'
@@ -45,9 +46,11 @@ export default async function Index() {
               With a few clicks, Eventify lets you effortlessly create custom events, specify details, and invite participants, while automated notifications ensure everyone stays informed.
             </p>
           </div>
-          <button className="py-2 rounded-xl no-underline bg-gradient-to-r from-fuchsia-600 via-orange-600 to-fuchsia-600 transition-colors duration-300 transform hover:bg-white/30 max-w-xs shadow-sm">
+          <Link
+                href="/create"
+          className="block font-semibold text-base text-center py-2 rounded-xl no-underline bg-gradient-to-r from-fuchsia-600 via-orange-600 to-fuchsia-600 transition-colors duration-300 transform hover:bg-white/30 max-w-xs shadow-sm">
           Get Started
-        </button>
+        </Link>
 
         </div>
 
@@ -56,6 +59,7 @@ export default async function Index() {
         <div className="bg-white/20 w-full h-[90%] rounded-l-3xl"></div>
         </div>
       </div>
+
       {/* <div className="my-auto flex-col">
 
         <p className="text-3xl lg:text-4xl font-bold !leading-tight max-w-xl text-center">
