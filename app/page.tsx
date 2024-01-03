@@ -28,7 +28,7 @@ export default async function Index() {
 
   return (
     <div className="flex-1 w-full flex flex-col items-center">
-      <nav className="bg-white/40 shadow-sm backdrop-blur-xl w-full flex justify-center border-b border-b-foreground/10 h-16">
+      <nav className="bg-gradient-to-r from-white/70 via-white/40 to-white/20  shadow-sm backdrop-blur-xl w-full flex justify-center border-b border-b-foreground/10 h-16">
         <div className="w-full max-w-4xl flex justify-between items-center p-3 text-sm">
           <div>
             <EventifyLogo />
@@ -37,8 +37,8 @@ export default async function Index() {
         </div>
       </nav>
       <div className="flex flex-row py-8 pl-16 w-[90vw] h-[75vh] justify-center my-auto bg-white/20 rounded-xl ring-1 ring-gray-600/5 backdrop-blur-xl">
-        <div className="flex flex-col h-full justify-center w-[60%] gap-10">
-          <div className="flex flex-col gap-3">
+        <div className="flex flex-col h-full justify-center w-[60%] gap-12">
+          <div className="flex flex-col gap-7">
             <p className="text-4xl font-bold !leading-tight max-w-xl">
               Create Events and Invite Participants with Automated Notifications
             </p>
@@ -48,7 +48,7 @@ export default async function Index() {
           </div>
           <Link
                 href="/create"
-          className="block font-semibold text-base text-center py-2 rounded-xl no-underline bg-gradient-to-r from-fuchsia-600 via-orange-600 to-fuchsia-600 transition-colors duration-300 transform hover:bg-white/30 max-w-xs shadow-sm">
+          className="block font-semibold text-base text-center py-2 rounded-xl no-underline bg-gradient-to-r from-purple-600 to-orange-600 transition-colors duration-300 transform hover:from-purple-500 hover:to-orange-500 max-w-xs shadow-md">
           Get Started
         </Link>
 
@@ -56,7 +56,7 @@ export default async function Index() {
 
         <div className="flex flex-col h-full w-[50%] align-middle justify-center">
 
-        <div className="bg-white/20 w-full h-[90%] rounded-l-3xl"></div>
+        <div className="bg-white/20 w-full h-[90%] rounded-l-3xl shadow-lg"></div>
         </div>
       </div>
 

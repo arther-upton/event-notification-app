@@ -76,7 +76,7 @@ export default function Login({
         Back
       </Link>
 
-      <div className="flex flex-col w-full py-8 px-8 sm:max-w-md justify-center gap-2 my-auto bg-white/30 rounded-xl shadow-lg backdrop-blur-xl">
+      <div className="flex flex-col w-full py-8 px-8 sm:max-w-md justify-center gap-2 my-auto bg-gradient-to-b from-white/60 via-white/30 to-white/30 rounded-xl shadow-lg backdrop-blur-xl">
 
         <div className="flex justify-center">
           <EventifyLogo />
@@ -90,7 +90,7 @@ export default function Login({
             Email
           </label>
           <input
-            className="rounded-md px-4 py-2 bg-inherit border-2 mb-6 placeholder-white placeholder-opacity-50 focus:outline-fuchsia-300"
+            className="rounded-md px-4 py-2 bg-inherit border-2 mb-6 placeholder-white placeholder-opacity-50 focus:outline-purple-300"
             name="email"
             placeholder="you@example.com"
             required
@@ -99,7 +99,7 @@ export default function Login({
             Password
           </label>
           <input
-            className="rounded-md px-4 py-2 bg-inherit border-2 mb-6 placeholder-white placeholder-opacity-50 focus:outline-fuchsia-300"
+            className="rounded-md px-4 py-2 bg-inherit border-2 mb-6 placeholder-white placeholder-opacity-50 focus:outline-purple-300"
             type="password"
             name="password"
             placeholder="••••••••"
