@@ -57,7 +57,7 @@ export default function Login({
     <>
       <Link
         href="/"
-        className="absolute left-8 top-8 py-2 px-4 rounded-md no-underline text-foreground bg-orange-600 backdrop-blur-xl hover:bg-white/30 flex items-center group text-sm"
+        className="absolute left-8 top-8 py-2 px-4 rounded-md no-underline text-foreground bg-orange-600 backdrop-blur-xl hover:bg-white/30 flex items-center group text-sm transition-colors duration-300 transform"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -76,9 +76,11 @@ export default function Login({
         Back
       </Link>
 
-      <div className="flex flex-col w-full py-8 px-8 sm:max-w-md justify-center gap-2 my-auto bg-white/25 rounded-xl shadow-lg backdrop-blur-xl">
+      <div className="flex flex-col w-full py-8 px-8 sm:max-w-md justify-center gap-2 my-auto bg-white/30 rounded-xl shadow-lg backdrop-blur-xl">
 
-        <EventifyLogo />
+        <div className="flex justify-center">
+          <EventifyLogo />
+        </div>
         
         <form
           className="animate-in flex-1 flex flex-col w-full justify-center gap-2 text-foreground mt-3"
@@ -108,12 +110,12 @@ export default function Login({
           </button>
           <button
             formAction={signUp}
-            className="border border-foreground/20 rounded-md px-4 py-2 text-foreground mb-2"
+            className="border border-foreground/20 rounded-md px-4 py-2 text-foreground mb-2 hover:bg-orange-600 transition-colors duration-300 transform"
           >
             Sign Up
           </button>
           {searchParams?.message && (
-            <p className="mt-4 p-4 bg-foreground/10 text-foreground text-center">
+            <p className="mt-4 p-4 bg-foreground/20 text-foreground text-center rounded-md">
               {searchParams.message}
             </p>
           )}
