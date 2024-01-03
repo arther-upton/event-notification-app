@@ -2,7 +2,7 @@ export default function EventifyLogo() {
     return (
         <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
             width="161" height="36" viewBox="0 0 1293 289"
-            preserveAspectRatio="xMidYMid meet" className="w-full">
+            preserveAspectRatio="xMidYMid meet">
 
             <g transform="translate(0.000000,289.000000) scale(0.100000,-0.100000)"
                 fill="#EA580C" stroke="none">
