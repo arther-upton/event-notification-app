@@ -3,7 +3,7 @@ import ConnectSupabaseSteps from '@/components/ConnectSupabaseSteps'
 import SignUpUserSteps from '@/components/SignUpUserSteps'
 import Header from '@/components/Header'
 import Link from 'next/link'
-import AuthButton from '../components/AuthButton'
+import NavItems from '../components/NavItems'
 import { createClient } from '@/utils/supabase/server'
 import { cookies } from 'next/headers'
 import GithubIcon from '@/components/GithubIcon'
@@ -29,11 +29,11 @@ export default async function Index() {
   return (
     <div className="flex-1 w-full flex flex-col items-center">
       <nav className="bg-gradient-to-r from-white/70 via-white/40 to-white/20  shadow-sm backdrop-blur-xl w-full flex justify-center border-b border-b-foreground/10 h-16">
-        <div className="w-full max-w-4xl flex justify-between items-center p-3 text-sm">
+        <div className="w-[90vw] flex justify-between items-center p-3 text-sm">
           <div>
             <EventifyLogo />
           </div>
-          {isSupabaseConnected && <AuthButton />}
+          {isSupabaseConnected && <NavItems />}
         </div>
       </nav>
       <div className="flex flex-row py-8 pl-16 w-[90vw] h-[75vh] justify-center my-auto bg-white/20 rounded-xl ring-1 ring-gray-600/5 backdrop-blur-xl">

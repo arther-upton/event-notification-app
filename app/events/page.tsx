@@ -5,18 +5,9 @@ import { redirect } from 'next/navigation';
 import EventifyLogo from '@/components/EventifyLogo';
 import CreateEventForm from '@/components/CreateEventForm';
 
-export default async function Create() {
+export default function Create() {
 
-  const cookieStore = cookies();
-  const supabase = createClient(cookieStore);
-
-  const { data: { user } } = await supabase.auth.getUser();
-
-  if (!user) {
-    redirect('/login');
-  }
-
-  const createEvent = async (participants: string[], clientTimestamp: string, formData: FormData) => {
+  const createEvent = async (participants : string[], clientTimestamp: string, formData: FormData) => {
     'use server'
 
     const title = formData.get('title') as string;
@@ -31,11 +22,16 @@ export default async function Create() {
     const eventDate = new Date(clientTimestamp);
     const [eventYear, eventMonth, eventDay] = dateString.split('-');
     const [eventHour, eventMinutes] = timeString.split(':');
-    eventDate.setFullYear(parseInt(eventYear), parseInt(eventMonth) - 1, parseInt(eventDay));
+    eventDate.setFullYear(parseInt(eventYear), parseInt(eventMonth)-1, parseInt(eventDay));
     eventDate.setHours(parseInt(eventHour), parseInt(eventMinutes));
 
+    const cookieStore = cookies();
+    const supabase = createClient(cookieStore);
 
-    const { data, error } = await supabase
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (user) {
+      const { data, error } = await supabase
       .from('event')
       .insert({
         user_id: user.id,
@@ -49,13 +45,16 @@ export default async function Create() {
       })
       .select();
 
-    if (error) {
-      console.log(error);
-      return redirect('/create?message=Event creation failed');
+      if (error) {
+        console.log(error);
+        return redirect('/create?message=Event creation failed');
+      }
+
+      console.log(data);
+      return redirect('/');
     }
 
-    console.log(data);
-    return redirect('/');
+    return redirect('/create?message=Event creation failed');
   }
 
   return (
@@ -81,12 +80,7 @@ export default async function Create() {
         Back
       </Link>
 
-      <div className="flex flex-col w-full py-8 px-8 max-w-lg justify-center gap-2 my-auto bg-gradient-to-b from-white/40 via-white/30 to-white/20 rounded-xl shadow-lg backdrop-blur-xl">
-        <p className="text-3xl font-bold text-white">
-          Create Event
-        </p>
-        <CreateEventForm createEvent={createEvent} />
-      </div>
+WOWWW
     </>
   )
 }
