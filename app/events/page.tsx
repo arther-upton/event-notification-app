@@ -14,46 +14,37 @@ export default async function Events() {
     redirect('/login');
   }
 
-  const data = [
-    {
-      event_id: '864acb58-af0b-45bb-9a51-ea8aac358de8',
-      user_id: 'f47dc834-88d9-4f28-83af-181f5b5fb05c',
-      title: 'Future Fest',
-      description: 'good ok ',
-      venue: 'Expo Center, Lahore',
-      remote: false,
-      link: '',
-      date_time: '2024-01-26T12:00:50.897+00:00',
-      created_at: '2024-01-04T12:01:34.189472+00:00',
-      participants: [
-        'abdullahumer575@gmail.com',
-        'anyotheremail@emailserver.com',
-        'yetanotheremail@abc.com'
-      ]
-    },
-    {
-      event_id: '4685bc52-1433-4d3c-b9f9-6ce13d9a7dfe',
-      user_id: 'f47dc834-88d9-4f28-83af-181f5b5fb05c',
-      title: 'Another Event',
-      description: 'good event',
-      venue: 'test venue',
-      remote: false,
-      link: '',
-      date_time: '2024-01-17T13:24:44.819+00:00',
-      created_at: '2024-01-04T13:21:47.433394+00:00',
-      participants: [ 'testemail@test.com', 'another@test.com' ]
+  const { data, error } = await supabase
+    .from('event')
+    .select()
+    .eq('user_id', user.id);
+
+  if (error) {
+    console.log(error);
+  }
+
+  console.log(data);
+
+  const deleteEvent = async (eventId: string, formData: FormData) => {
+    'use server'
+
+    console.log(eventId);
+
+    const cookieStore = cookies();
+    const supabase = createClient(cookieStore);
+
+    const { error } = await supabase
+      .from('event')
+      .delete()
+      .eq('event_id', eventId);
+
+    if (error) {
+      console.log(error);
+      return redirect('/events?message=Event deletion failed');
     }
-  ]
-  // const { data, error } = await supabase
-  //   .from('event')
-  //   .select()
-  //   .eq('user_id', user.id);
 
-  // if (error) {
-  //   console.log(error);
-  // }
-
-  // console.log(data);
+    return redirect('events');
+  }
 
   return (
     <>
@@ -78,29 +69,47 @@ export default async function Events() {
         Back
       </Link>
 
-      <div className="w-[80vw] mt-28 h-full grid grid-cols-3 gap-2 border border-red-500">
-        
-        <p className="border border-red-600">abc</p>
-        <p className="border border-red-600">123</p>
-        <p className="border border-red-600">abc</p>
-        <p className="border border-red-600">123</p>
-        <p className="border border-red-600">abc</p>
-        <p className="border border-red-600">123</p>
-
-        {/* <div className="py-3 bg-gradient-to-b from-white/40 via-white/30 to-white/20 rounded-xl shadow-lg backdrop-blur-xlrounded-xl shadow-lg backdrop-blur-xl">
-
-        </div> */}
-        {/* <div className="text-3xl font-bold text-white">
+      <div className="w-[90vw] mt-28 h-full grid grid-cols-3 gap-4">
         {
           data?.map((event, index: number) => {
-            return <p key={index}
-              className="py-3 border-b border-white bg-gradient-to-b from-white/40 via-white/30 to-white/20 rounded-xl shadow-lg backdrop-blur-xlrounded-xl shadow-lg backdrop-blur-xl"
-            >
-              {event.title}
-            </p>
+            return (
+              <div key={index} className="text-base font-light flex flex-col py-3 px-5 bg-gradient-to-b from-white/40 via-white/30 to-white/20 rounded-xl backdrop-blur-xlrounded-xl shadow-lg backdrop-blur-xl">
+                <div className="flex flex-row justify-between align-middle items-center mb-2">
+                  <p className="text-2xl font-bold">{event.title}</p>
+                  <p className="text-sm font-light">{event.date_time}</p>
+                </div>
+                {
+                  event.description.length > 0 ?
+                    <p className="align-middle items-center"><span className="font-semibold">About:</span> {event.description}</p>
+                    : <></>
+                }
+                <p className="align-middle items-center mb-2"><span className="font-semibold">Venue:</span> {event.venue}</p>
+                {
+                  event.link.length > 0 ?
+                    <p>Link: {event.link}</p>
+                    : <></>
+                }
+                <p className="font-semibold mb-1">Invitees:</p>
+                <div className="w-full grid grid-cols-2 gap-2 mb-6">
+                  {
+                    event.participants.map((p: string, index: number) =>
+                      <p key={index}
+                        className="bg-white/10 border border-white/25 text-center text-xs py-1 px-1 rounded-md"
+                      >
+                        {p}
+                      </p>
+                    )
+                  }
+                </div>
+                <form action={deleteEvent.bind(null, event.event_id)} className="mt-auto">
+                  <button className="w-full font-normal rounded-md px-4 py-2 text-foreground bg-purple-500/75">
+                    Cancel Event
+                  </button>
+                </form>
+              </div>
+            )
           })
         }
-        </div> */}
       </div>
     </>
   )
