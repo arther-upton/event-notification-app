@@ -11,6 +11,7 @@ export default function Create() {
     'use server'
 
     console.log(formData);
+    console.log(participants);
     // const email = formData.get('email') as string
     // const password = formData.get('password') as string
     // const cookieStore = cookies()
@@ -51,7 +52,7 @@ export default function Create() {
         Back
       </Link>
 
-      <div className="flex flex-col w-full py-8 px-8 sm:max-w-md justify-center gap-2 my-auto bg-gradient-to-b from-white/40 via-white/30 to-white/20 rounded-xl shadow-lg backdrop-blur-xl">
+      <div className="flex flex-col w-full py-8 px-8 max-w-lg justify-center gap-2 my-auto bg-gradient-to-b from-white/40 via-white/30 to-white/20 rounded-xl shadow-lg backdrop-blur-xl">
         <p className="text-3xl font-bold text-white">
           Create Event
         </p>
