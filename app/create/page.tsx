@@ -1,32 +1,60 @@
-import Link from 'next/link'
-import { cookies } from 'next/headers'
-import { createClient } from '@/utils/supabase/server'
-import { redirect } from 'next/navigation'
-import EventifyLogo from '@/components/EventifyLogo'
-import CreateEventForm from '@/components/CreateEventForm'
+import Link from 'next/link';
+import { cookies } from 'next/headers';
+import { createClient } from '@/utils/supabase/server';
+import { redirect } from 'next/navigation';
+import EventifyLogo from '@/components/EventifyLogo';
+import CreateEventForm from '@/components/CreateEventForm';
 
 export default function Create() {
 
-  const createEvent = async (participants : string[], formData: FormData) => {
+  const createEvent = async (participants : string[], clientTimestamp: string, formData: FormData) => {
     'use server'
 
-    console.log(formData);
-    console.log(participants);
-    // const email = formData.get('email') as string
-    // const password = formData.get('password') as string
-    // const cookieStore = cookies()
-    // const supabase = createClient(cookieStore)
+    const title = formData.get('title') as string;
+    const venue = formData.get('venue') as string;
+    const venueType = formData.get('venueType') as string;
+    const link = formData.get('link') as string;
+    const description = formData.get('description') as string;
+    const dateString = formData.get('date') as string;
+    const timeString = formData.get('time') as string;
 
-    // const { error } = await supabase.auth.signInWithPassword({
-    //   email,
-    //   password,
-    // })
+    // having to do this as timestamp generation code runs on server and does not have the client's time zone
+    const eventDate = new Date(clientTimestamp);
+    const [eventYear, eventMonth, eventDay] = dateString.split('-');
+    const [eventHour, eventMinutes] = timeString.split(':');
+    eventDate.setFullYear(parseInt(eventYear), parseInt(eventMonth)-1, parseInt(eventDay));
+    eventDate.setHours(parseInt(eventHour), parseInt(eventMinutes));
 
-    // if (error) {
-    //   return redirect('/login?message=Could not authenticate user')
-    // }
+    const cookieStore = cookies();
+    const supabase = createClient(cookieStore);
 
-    // return redirect('/')
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (user) {
+      const { data, error } = await supabase
+      .from('event')
+      .insert({
+        user_id: user.id,
+        title: title,
+        description: (description ? description : null),
+        venue: venue,
+        remote: (venueType === "remote" ? true : false),
+        link: (link ? link : ""),
+        date_time: eventDate.toISOString(),
+        participants: participants,
+      })
+      .select();
+
+      if (error) {
+        console.log(error);
+        return redirect('/create?message=Event creation failed');
+      }
+
+      console.log(data);
+      return redirect('/');
+    }
+
+    return redirect('/create?message=Event creation failed');
   }
 
   return (

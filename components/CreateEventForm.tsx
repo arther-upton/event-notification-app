@@ -2,14 +2,14 @@
 
 import { useState } from 'react';
 
-export default function CreateEventForm({ createEvent }: { createEvent: (participants: string[], formData: FormData) => Promise<void> }) {
+export default function CreateEventForm({ createEvent }: { createEvent: (participants: string[], clientTimestamp: string, formData: FormData) => Promise<void> }) {
 
     const [participants, setParticipants] = useState<string[]>([]);
     const [participantEmail, setParticipantEmail] = useState<string>("");
     const [remoteBool, setRemoteBool] = useState<boolean>(false);
 
     // this is probably being reinitialized on every re-render ??
-    const createEventWithParticipants = createEvent.bind(null, participants);
+    const createEventWithParams = createEvent.bind(null, participants, new Date().toISOString());
 
     const participantChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setParticipantEmail(event.target.value);
@@ -18,12 +18,13 @@ export default function CreateEventForm({ createEvent }: { createEvent: (partici
     const addParticipant = (event: React.MouseEvent<HTMLButtonElement>) => {
         console.log("added: " + participantEmail);
         setParticipants((prevParticipants) => [...prevParticipants, participantEmail]);
+        setParticipantEmail('');
     }
 
     return (
         <form
             className="animate-in flex-1 flex flex-col w-full justify-center gap-2 text-foreground mt-3"
-            action={createEventWithParticipants}
+            action={createEventWithParams}
         >
 
             <label className="text-lg font-semibold" htmlFor="title">
