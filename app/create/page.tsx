@@ -34,28 +34,36 @@ export default async function Create() {
     eventDate.setFullYear(parseInt(eventYear), parseInt(eventMonth) - 1, parseInt(eventDay));
     eventDate.setHours(parseInt(eventHour), parseInt(eventMinutes));
 
+    const cookieStore = cookies();
+    const supabase = createClient(cookieStore);
+  
+    const { data: { user } } = await supabase.auth.getUser();
 
-    const { data, error } = await supabase
-      .from('event')
-      .insert({
-        user_id: user.id,
-        title: title,
-        description: (description ? description : null),
-        venue: venue,
-        remote: (venueType === "remote" ? true : false),
-        link: (link ? link : ""),
-        date_time: eventDate.toISOString(),
-        participants: participants,
-      })
-      .select();
-
-    if (error) {
-      console.log(error);
-      return redirect('/create?message=Event creation failed');
+    if (user) {
+      const { data, error } = await supabase
+        .from('event')
+        .insert({
+          user_id: user.id,
+          title: title,
+          description: (description ? description : null),
+          venue: venue,
+          remote: (venueType === "remote" ? true : false),
+          link: (link ? link : ""),
+          date_time: eventDate.toISOString(),
+          participants: participants,
+        })
+        .select();
+  
+      if (error) {
+        console.log(error);
+        return redirect('/create?message=Event creation failed');
+      }
+  
+      console.log(data);
+      return redirect('/');
     }
 
-    console.log(data);
-    return redirect('/');
+    return redirect('/create?message=Event creation failed');
   }
 
   return (
@@ -81,7 +89,7 @@ export default async function Create() {
         Back
       </Link>
 
-      <div className="flex flex-col w-full py-8 px-8 max-w-lg justify-center gap-2 my-auto bg-gradient-to-b from-white/40 via-white/30 to-white/20 rounded-xl shadow-lg backdrop-blur-xl">
+      <div className="flex flex-col py-8 px-10 justify-center gap-2 mt-28 bg-gradient-to-b from-white/40 via-white/30 to-white/20 rounded-xl shadow-lg backdrop-blur-xl">
         <p className="text-3xl font-bold text-white">
           Create Event
         </p>

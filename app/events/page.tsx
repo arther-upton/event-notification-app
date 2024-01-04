@@ -2,60 +2,58 @@ import Link from 'next/link';
 import { cookies } from 'next/headers';
 import { createClient } from '@/utils/supabase/server';
 import { redirect } from 'next/navigation';
-import EventifyLogo from '@/components/EventifyLogo';
-import CreateEventForm from '@/components/CreateEventForm';
 
-export default function Create() {
+export default async function Events() {
 
-  const createEvent = async (participants : string[], clientTimestamp: string, formData: FormData) => {
-    'use server'
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
 
-    const title = formData.get('title') as string;
-    const venue = formData.get('venue') as string;
-    const venueType = formData.get('venueType') as string;
-    const link = formData.get('link') as string;
-    const description = formData.get('description') as string;
-    const dateString = formData.get('date') as string;
-    const timeString = formData.get('time') as string;
+  const { data: { user } } = await supabase.auth.getUser();
 
-    // having to do this as timestamp generation code runs on server and does not have the client's time zone
-    const eventDate = new Date(clientTimestamp);
-    const [eventYear, eventMonth, eventDay] = dateString.split('-');
-    const [eventHour, eventMinutes] = timeString.split(':');
-    eventDate.setFullYear(parseInt(eventYear), parseInt(eventMonth)-1, parseInt(eventDay));
-    eventDate.setHours(parseInt(eventHour), parseInt(eventMinutes));
-
-    const cookieStore = cookies();
-    const supabase = createClient(cookieStore);
-
-    const { data: { user } } = await supabase.auth.getUser();
-
-    if (user) {
-      const { data, error } = await supabase
-      .from('event')
-      .insert({
-        user_id: user.id,
-        title: title,
-        description: (description ? description : null),
-        venue: venue,
-        remote: (venueType === "remote" ? true : false),
-        link: (link ? link : ""),
-        date_time: eventDate.toISOString(),
-        participants: participants,
-      })
-      .select();
-
-      if (error) {
-        console.log(error);
-        return redirect('/create?message=Event creation failed');
-      }
-
-      console.log(data);
-      return redirect('/');
-    }
-
-    return redirect('/create?message=Event creation failed');
+  if (!user) {
+    redirect('/login');
   }
+
+  const data = [
+    {
+      event_id: '864acb58-af0b-45bb-9a51-ea8aac358de8',
+      user_id: 'f47dc834-88d9-4f28-83af-181f5b5fb05c',
+      title: 'Future Fest',
+      description: 'good ok ',
+      venue: 'Expo Center, Lahore',
+      remote: false,
+      link: '',
+      date_time: '2024-01-26T12:00:50.897+00:00',
+      created_at: '2024-01-04T12:01:34.189472+00:00',
+      participants: [
+        'abdullahumer575@gmail.com',
+        'anyotheremail@emailserver.com',
+        'yetanotheremail@abc.com'
+      ]
+    },
+    {
+      event_id: '4685bc52-1433-4d3c-b9f9-6ce13d9a7dfe',
+      user_id: 'f47dc834-88d9-4f28-83af-181f5b5fb05c',
+      title: 'Another Event',
+      description: 'good event',
+      venue: 'test venue',
+      remote: false,
+      link: '',
+      date_time: '2024-01-17T13:24:44.819+00:00',
+      created_at: '2024-01-04T13:21:47.433394+00:00',
+      participants: [ 'testemail@test.com', 'another@test.com' ]
+    }
+  ]
+  // const { data, error } = await supabase
+  //   .from('event')
+  //   .select()
+  //   .eq('user_id', user.id);
+
+  // if (error) {
+  //   console.log(error);
+  // }
+
+  // console.log(data);
 
   return (
     <>
@@ -80,7 +78,30 @@ export default function Create() {
         Back
       </Link>
 
-WOWWW
+      <div className="w-[80vw] mt-28 h-full grid grid-cols-3 gap-2 border border-red-500">
+        
+        <p className="border border-red-600">abc</p>
+        <p className="border border-red-600">123</p>
+        <p className="border border-red-600">abc</p>
+        <p className="border border-red-600">123</p>
+        <p className="border border-red-600">abc</p>
+        <p className="border border-red-600">123</p>
+
+        {/* <div className="py-3 bg-gradient-to-b from-white/40 via-white/30 to-white/20 rounded-xl shadow-lg backdrop-blur-xlrounded-xl shadow-lg backdrop-blur-xl">
+
+        </div> */}
+        {/* <div className="text-3xl font-bold text-white">
+        {
+          data?.map((event, index: number) => {
+            return <p key={index}
+              className="py-3 border-b border-white bg-gradient-to-b from-white/40 via-white/30 to-white/20 rounded-xl shadow-lg backdrop-blur-xlrounded-xl shadow-lg backdrop-blur-xl"
+            >
+              {event.title}
+            </p>
+          })
+        }
+        </div> */}
+      </div>
     </>
   )
 }
