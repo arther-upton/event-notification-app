@@ -4,6 +4,7 @@ import { createClient } from '@/utils/supabase/server';
 import { redirect } from 'next/navigation';
 import EventifyLogo from '@/components/EventifyLogo';
 import CreateEventForm from '@/components/CreateEventForm';
+import nodemailer from 'nodemailer';
 
 export default async function Create() {
 
@@ -60,6 +61,48 @@ export default async function Create() {
       }
   
       console.log(data);
+
+      const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: process.env.GOOGLE_EMAIL,
+          pass: process.env.GOOGLE_PASSWORD,
+        },
+      });
+
+      const mailOptions = {
+        from: process.env.GOOGLE_EMAIL,
+        to: participants.join(', '),
+        subject: `Eventify Invitation: ${title}`,
+        text: `${user.email} is inviting you to an Eventify event.`,
+        html: `
+          <div>
+            <h1>
+              Venue: ${venue} (${venueType})
+            </h1>
+            <h3>
+              At: ${eventDate.toString()}
+            </h3>
+          </div>
+        `,
+      };
+
+      try {
+        const mail = await transporter.sendMail(mailOptions);
+      } catch (error) {
+        console.log(error);
+        return redirect('/create?message=Participant Invites Failed');
+      }
+
+      // transporter.sendMail(mailOptions, function(error, info) {
+      //   if (error) {
+      //  console.log(error);
+      //   }
+      //   else {
+      //     console.log('Email sent: ' + info.response);
+      //   }
+      // });
+
       return redirect('/');
     }
 
