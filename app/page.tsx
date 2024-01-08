@@ -56,24 +56,11 @@ export default async function Index() {
 
         <div className="flex flex-col h-full w-[50%] align-middle justify-center">
 
-        <div className="bg-white/20 w-full h-[90%] rounded-l-3xl shadow-lg"></div>
+          <div className="bg-white/20 w-full h-[90%] rounded-l-3xl shadow-lg overflow-clip">
+            test
+          </div>
         </div>
       </div>
-
-      {/* <div className="my-auto flex-col">
-
-        <p className="text-3xl lg:text-4xl font-bold !leading-tight max-w-xl text-center">
-          Create Events and Invite Participants with Automated Notifications
-        </p>
-      </div> */}
-
-      {/* <div className="animate-in flex-1 flex flex-col gap-20 opacity-0 max-w-4xl px-3">
-        <Header />
-        <main className="flex-1 flex flex-col gap-6">
-          <h2 className="font-bold text-4xl mb-4">Next steps</h2>
-          {isSupabaseConnected ? <SignUpUserSteps /> : <ConnectSupabaseSteps />}
-        </main>
-      </div> */}
 
       <footer className="mt-auto w-full border-t border-t-foreground/20 p-5 flex justify-center items-center text-center text-xs">
         <div className="flex items-center gap-1">

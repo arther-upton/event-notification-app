@@ -75,8 +75,8 @@ export default async function Events() {
             return (
               <div key={index} className="text-base font-light flex flex-col py-3 px-5 bg-gradient-to-b from-white/40 via-white/30 to-white/20 rounded-xl backdrop-blur-xlrounded-xl shadow-lg backdrop-blur-xl">
                 <div className="flex flex-row justify-between align-middle items-center mb-2">
-                  <p className="text-2xl font-bold">{event.title}</p>
-                  <p className="text-sm font-light">{event.date_time}</p>
+                  <p className="text-xl font-bold">{event.title}</p>
+                  <p className="text-sm font-light">{(new Date(event.date_time)).toDateString()}{' '}{(new Date(event.date_time)).toLocaleString([], {hour: '2-digit', minute: '2-digit'})}</p>
                 </div>
                 {
                   event.description.length > 0 ?
