@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation';
 import EventifyLogo from '@/components/EventifyLogo';
 import CreateEventForm from '@/components/CreateEventForm';
 import nodemailer from 'nodemailer';
+import { generateEmailHTML } from '@/utils/generateEmailHTML';
 
 export default async function Create() {
 
@@ -75,24 +76,8 @@ export default async function Create() {
         to: participants.join(', '),
         subject: `Eventify Invitation: ${title}`,
         text: `${user.email} is inviting you to an Eventify event.`,
-        html: `
-          <div>
-            <h1>
-              Venue: ${venue} (${venueType})
-            </h1>
-            <h3>
-              At: ${eventDate.toString()}
-            </h3>
-          </div>
-        `,
+        html: generateEmailHTML(title, user.email, venue, venueType, link, eventDate),
       };
-
-      // try {
-      //   const mail = await transporter.sendMail(mailOptions);
-      // } catch (error) {
-      //   console.log(error);
-      //   return redirect('/create?message=Participant Invites Failed');
-      // }
 
       await new Promise((resolve, reject) => {
         transporter.sendMail(mailOptions, (err, response) => {
