@@ -36,7 +36,7 @@ export default async function Index() {
           {isSupabaseConnected && <NavItems />}
         </div>
       </nav>
-      <div className="max-xl:gap-5 flex flex-row py-8 pl-16 w-[90vw] h-[90vh] my-5 justify-center bg-white/20 rounded-xl ring-1 ring-gray-600/5 backdrop-blur-xl">
+      <div className="max-xl:gap-5 flex flex-row py-8 pl-16 w-[90vw] h-[90vh] my-10 justify-center bg-white/20 rounded-xl ring-1 ring-gray-600/5 backdrop-blur-xl">
         <div className="flex flex-col h-full justify-center w-[60%] gap-12 pb-32">
           <div className="flex flex-col gap-7">
             <p className="text-4xl font-bold !leading-tight max-w-xl">
@@ -53,7 +53,7 @@ export default async function Index() {
           </Link>
         </div>
 
-        <div className="relative bg-white/20 h-[90%] rounded-l-3xl shadow-lg w-[50%] align-middle justify-center">
+        <div className="relative bg-gradient-to-r from-white/10 via-white/10 to-white/10 h-[90%] shadow-md rounded-l-3xl w-[50%] align-middle justify-center">
 
           <div className="px-8 pt-6 overflow-clip">
             <p className="text-2xl font-bold text-white">
@@ -72,6 +72,7 @@ export default async function Index() {
                   placeholder="Future Fest"
                   required
                   type="text"
+                  disabled={true}
                 />
 
                 <label className="text-base font-semibold" htmlFor="venue">
@@ -83,18 +84,21 @@ export default async function Index() {
                   placeholder="Expo Center, Lahore"
                   required
                   type="text"
+                  disabled={true}
                 />
 
                 <div className="grid grid-cols-2 gap-1 rounded-md bg-inherit border-2 border-white/25 mb-1 p-1">
                   <div>
                     <input type="radio" name="venueType" id="onsite" value="onsite" className="peer hidden"
                       defaultChecked={true}
+                      disabled={true}
                     />
                     <label htmlFor="onsite" className="block cursor-pointer select-none rounded-md px-2 py-1 text-center peer-checked:bg-purple-500/75 peer-checked:font-bold peer-checked:text-white">Onsite</label>
                   </div>
                   <div>
                     <input type="radio" name="venueType" id="remote" value="remote" className="peer hidden"
                       defaultChecked={false}
+                      disabled={true}
                     />
                     <label htmlFor="remote" className="block cursor-pointer select-none rounded-md px-2 py-1 text-center peer-checked:bg-purple-500/75 peer-checked:font-bold peer-checked:text-white">Remote</label>
                   </div>
@@ -123,6 +127,7 @@ export default async function Index() {
                   placeholder="..."
                   required
                   type="date"
+                  disabled={true}
                 />
 
                 <label className="text-base font-semibold" htmlFor="time">
@@ -134,6 +139,7 @@ export default async function Index() {
                   placeholder="..."
                   required
                   type="time"
+                  disabled={true}
                 />
 
                 <label className="text-base font-semibold" htmlFor="participant">
@@ -145,6 +151,7 @@ export default async function Index() {
                     name="participant"
                     placeholder="Enter participant email"
                     type="email"
+                    disabled={true}
                   />
                   <button
                     className="text-lg rounded-md px-3 py-1 text-foreground bg-orange-600 hover:bg-white/30 transition-colors duration-300 transform"
@@ -152,14 +159,14 @@ export default async function Index() {
                   >+</button>
                 </div>
 
-                <button className="bg-orange-600 rounded-md px-3 py-1 text-foreground mb-1">
+                <div className="text-center bg-orange-600 rounded-md px-3 py-1 text-foreground mb-1">
                   Create
-                </button>
+                </div>
               </div>
             </div>
           </div>
 
-          <div className="max-xl:hidden absolute right-[75%] top-[65%] w-[65%] text-base font-light flex flex-col py-3 px-5 bg-gradient-to-b from-white/20 via-white/10 to-white/10 rounded-xl shadow-lg">
+          <div className="max-xl:hidden absolute right-[75%] top-[65%] w-[65%] text-base font-light flex flex-col py-3 px-5 bg-gradient-to-r from-white/10 via-white/25 to-white/30 rounded-xl shadow-sm">
             <div className="flex flex-row justify-between align-middle items-center mb-2">
               <p className="text-xl font-bold">Git Workshop</p>
               <p className="text-sm font-light">Wed Jan 10 2024 07:00 PM</p>
@@ -186,7 +193,7 @@ export default async function Index() {
             </div>
           </div>
 
-          <div className="max-xl:w-[80%] max-xl:right-[10%] absolute right-[2%] top-[75%] w-[65%] text-base font-light flex flex-col py-3 px-5 bg-gradient-to-b from-white/20 via-white/10 to-white/10 rounded-xl shadow-lg">
+          <div className="max-xl:w-[80%] max-xl:right-[10%] absolute right-[2%] top-[75%] w-[65%] text-base font-light flex flex-col py-3 px-5 bg-gradient-to-r from-white/10 via-white/25 to-white/30 rounded-xl shadow-sm">
             <div className="flex flex-row justify-between align-middle items-center mb-2">
               <p className="text-xl font-bold">Cricket 5v5</p>
               <p className="text-sm font-light">Thu Feb 01 2024 04:00 PM</p>
