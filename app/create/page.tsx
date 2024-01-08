@@ -87,21 +87,25 @@ export default async function Create() {
         `,
       };
 
-      try {
-        const mail = await transporter.sendMail(mailOptions);
-      } catch (error) {
-        console.log(error);
-        return redirect('/create?message=Participant Invites Failed');
-      }
+      // try {
+      //   const mail = await transporter.sendMail(mailOptions);
+      // } catch (error) {
+      //   console.log(error);
+      //   return redirect('/create?message=Participant Invites Failed');
+      // }
 
-      // transporter.sendMail(mailOptions, function(error, info) {
-      //   if (error) {
-      //  console.log(error);
-      //   }
-      //   else {
-      //     console.log('Email sent: ' + info.response);
-      //   }
-      // });
+      await new Promise((resolve, reject) => {
+        transporter.sendMail(mailOptions, (err, response) => {
+          if (err) {
+            console.log(err);
+            reject(err);
+            return redirect('/create?message=Participant Invites Failed');
+          } else {
+            console.log(response);
+            resolve(response);
+          }
+        });
+      });
 
       return redirect('/');
     }
