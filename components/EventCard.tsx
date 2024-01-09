@@ -27,13 +27,13 @@ export default function EventCard({ event, deleteEvent }: { event: Event; delete
                 <p className="text-sm font-light">{(new Date(event.date_time)).toDateString()}{' '}{(new Date(event.date_time)).toLocaleString([], { hour: '2-digit', minute: '2-digit' })}</p>
             </div>
             {
-                event.description.length > 0 ?
+                event.description?.length > 0 ?
                     <p className="align-middle items-center"><span className="font-semibold">About:</span> {event.description}</p>
                     : <></>
             }
             <p className="align-middle items-center mb-2"><span className="font-semibold">Venue:</span> {event.venue}</p>
             {
-                event.link.length > 0 ?
+                event.link?.length > 0 ?
                     <p>Link: {event.link}</p>
                     : <></>
             }
