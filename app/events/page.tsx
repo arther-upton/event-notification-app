@@ -45,7 +45,7 @@ export default async function Events() {
 
     if (error) {
       console.log(error);
-      return redirect('/events?message=Event deletion failed');
+      return redirect('/events?message=Event Cancellation Failed');
     }
 
     const transporter = nodemailer.createTransport({
@@ -76,7 +76,7 @@ export default async function Events() {
         }
       });
     });
-    
+
     return redirect('events');
   }
 
