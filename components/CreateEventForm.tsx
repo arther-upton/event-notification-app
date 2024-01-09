@@ -17,8 +17,10 @@ export function CreateButton({ disabledCheck } : { disabledCheck: boolean }) {
 export default function CreateEventForm({ createEvent }: { createEvent: (participants: string[], clientTimestamp: string, formData: FormData) => Promise<void> }) {
 
     const [snackBarOpen, setSnackBarOpen] = useState<boolean>(false);
+    const [snackBarMessage, setSnackBarMessage] = useState<string>("");
     const [participants, setParticipants] = useState<string[]>([]);
     const [participantEmail, setParticipantEmail] = useState<string>("");
+    const [eventDate, setEventDate] = useState<string>("");
     const [remoteBool, setRemoteBool] = useState<boolean>(false);
 
     // this is probably being reinitialized on every re-render ??
@@ -28,10 +30,26 @@ export default function CreateEventForm({ createEvent }: { createEvent: (partici
         setParticipantEmail(event.target.value);
     }
 
+    const dateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setEventDate(event.target.value);
+        console.log(event.target.value);
+    }
+
     const addParticipant = (event: React.MouseEvent<HTMLButtonElement>) => {
+
+        if (!(/\S+@\S+\.\S+/.test(participantEmail))) {
+            setSnackBarOpen(true);
+            setSnackBarMessage("Invalid Email!");
+        }
+
         console.log("added: " + participantEmail);
         setParticipants((prevParticipants) => [...prevParticipants, participantEmail]);
         setParticipantEmail('');
+    }
+
+    const validateTime = (event: React.ChangeEvent<HTMLInputElement>) => {
+
+        console.log("time changed:" + event.target.value);
     }
 
     return (
@@ -112,6 +130,7 @@ export default function CreateEventForm({ createEvent }: { createEvent: (partici
                     required
                     type="date"
                     min={new Date().toISOString().split('T')[0]}
+                    onChange={dateChange}
                 />
 
                 <label className="text-lg font-semibold" htmlFor="time">
@@ -123,7 +142,12 @@ export default function CreateEventForm({ createEvent }: { createEvent: (partici
                     placeholder="..."
                     required
                     type="time"
-                    min={new Date(Date.now() + 60 * 60 * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                    min={
+                        eventDate === (new Date().toISOString().split('T')[0]) ?
+                        new Date(Date.now() + 60 * 60 * 1000).toLocaleTimeString([], { hour12: false, hour: '2-digit', minute: '2-digit' }) :
+                        undefined
+                    }
+                    onChange={validateTime}
                 />
 
                 <label className="text-lg font-semibold" htmlFor="participant">
@@ -157,7 +181,7 @@ export default function CreateEventForm({ createEvent }: { createEvent: (partici
                     }
                 </div>
 
-                <CreateButton disabledCheck={participants.length === 0 ? true : false}/>
+                <CreateButton disabledCheck={participants.length === 0 ? false : false}/>
 
                 <div className="flex flex-row justify-between ml-auto mt-auto animate-in gap-2 align-middle items-center bg-white/10 border border-white/25 rounded-xl px-2 py-2">
                     <p className="">
