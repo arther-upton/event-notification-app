@@ -2,6 +2,18 @@
 
 import { useState } from 'react';
 import { Event } from '@/utils/types';
+import { useFormStatus } from 'react-dom';
+
+export function DeleteButton() {
+
+    const { pending } = useFormStatus();
+
+    return (
+        <button type="submit" aria-disabled={pending} disabled={pending} className="w-full font-normal rounded-md px-4 py-2 text-foreground bg-purple-500/75 disabled:bg-slate-600/20">
+            {pending ? "Cancelling Event...": "Cancel Event"}
+        </button>
+    )
+}
 
 export default function EventCard({ event, deleteEvent }: { event: Event; deleteEvent: (eventId: string, formData: FormData) => Promise<void> }) {
 
@@ -38,9 +50,7 @@ export default function EventCard({ event, deleteEvent }: { event: Event; delete
                 }
             </div>
             <form action={deleteEventWithId} className="mt-auto">
-                <button className="w-full font-normal rounded-md px-4 py-2 text-foreground bg-purple-500/75">
-                    Cancel Event
-                </button>
+                <DeleteButton />
             </form>
         </div>
     )
