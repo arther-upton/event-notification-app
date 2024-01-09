@@ -58,7 +58,7 @@ export default async function Create() {
   
       if (error) {
         console.log(error);
-        return redirect('/create?message=Event creation failed');
+        return redirect('/create?message=Event Creation Failed');
       }
   
       console.log(data);
@@ -95,7 +95,7 @@ export default async function Create() {
       return redirect('/');
     }
 
-    return redirect('/create?message=Event creation failed');
+    return redirect('/create?message=User Not Found');
   }
 
   return (

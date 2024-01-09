@@ -3,19 +3,20 @@
 import { useState } from 'react';
 import { useFormStatus } from 'react-dom';
 
-export function CreateButton() {
+export function CreateButton({ disabledCheck } : { disabledCheck: boolean }) {
 
     const { pending } = useFormStatus();
 
     return (
-        <button type="submit" aria-disabled={pending} disabled={pending} className="bg-orange-600 rounded-md px-4 py-2 text-foreground mb-2 disabled:bg-slate-600/20">
-            {pending ? "Creating...": "Create"}
+        <button type="submit" aria-disabled={disabledCheck || pending} disabled={disabledCheck || pending} className="bg-orange-600 rounded-md px-4 py-2 text-foreground mb-2 disabled:bg-orange-500/60">
+            {pending ? "Creating..." : "Create"}
         </button>
     )
 }
 
 export default function CreateEventForm({ createEvent }: { createEvent: (participants: string[], clientTimestamp: string, formData: FormData) => Promise<void> }) {
 
+    const [snackBarOpen, setSnackBarOpen] = useState<boolean>(false);
     const [participants, setParticipants] = useState<string[]>([]);
     const [participantEmail, setParticipantEmail] = useState<string>("");
     const [remoteBool, setRemoteBool] = useState<boolean>(false);
@@ -110,6 +111,7 @@ export default function CreateEventForm({ createEvent }: { createEvent: (partici
                     placeholder="..."
                     required
                     type="date"
+                    min={new Date().toISOString().split('T')[0]}
                 />
 
                 <label className="text-lg font-semibold" htmlFor="time">
@@ -121,6 +123,7 @@ export default function CreateEventForm({ createEvent }: { createEvent: (partici
                     placeholder="..."
                     required
                     type="time"
+                    min={new Date(Date.now() + 60 * 60 * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                 />
 
                 <label className="text-lg font-semibold" htmlFor="participant">
@@ -154,7 +157,22 @@ export default function CreateEventForm({ createEvent }: { createEvent: (partici
                     }
                 </div>
 
-                <CreateButton />
+                <CreateButton disabledCheck={participants.length === 0 ? true : false}/>
+
+                <div className="flex flex-row justify-between ml-auto mt-auto animate-in gap-2 align-middle items-center bg-white/10 border border-white/25 rounded-xl px-2 py-2">
+                    <p className="">
+                        Snack Message!
+                    </p>
+                    <button
+                        onClick={() => {setSnackBarOpen(false)}}
+                        className="rounded-md px-2 py-2 text-foreground bg-orange-600 hover:bg-white/30 transition-colors duration-300 transform"
+                        type="button"
+                    >
+                        <svg width="10px" height="10px" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" xmlns="http://www.w3.org/2000/svg" className="hover:scale-110 transition-all ease-in-out">
+                            <path d="M20.7457 3.32851C20.3552 2.93798 19.722 2.93798 19.3315 3.32851L12.0371 10.6229L4.74275 3.32851C4.35223 2.93798 3.71906 2.93798 3.32854 3.32851C2.93801 3.71903 2.93801 4.3522 3.32854 4.74272L10.6229 12.0371L3.32856 19.3314C2.93803 19.722 2.93803 20.3551 3.32856 20.7457C3.71908 21.1362 4.35225 21.1362 4.74277 20.7457L12.0371 13.4513L19.3315 20.7457C19.722 21.1362 20.3552 21.1362 20.7457 20.7457C21.1362 20.3551 21.1362 19.722 20.7457 19.3315L13.4513 12.0371L20.7457 4.74272C21.1362 4.3522 21.1362 3.71903 20.7457 3.32851Z" fill="currentColor" />
+                        </svg>
+                    </button>
+                </div>
             </div>
         </form>
     )
