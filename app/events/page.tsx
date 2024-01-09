@@ -69,7 +69,7 @@ export default async function Events() {
         Back
       </Link>
 
-      <div className="w-[90vw] mt-28 h-full grid grid-cols-3 gap-4">
+      <div className="w-[90vw] my-28 h-full grid grid-cols-3 gap-4">
         {
           data?.map((event, index: number) => {
             return (
