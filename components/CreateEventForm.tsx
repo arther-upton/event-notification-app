@@ -42,9 +42,12 @@ export default function CreateEventForm({ createEvent }: { createEvent: (partici
             setSnackBarMessage("Invalid Email!");
         }
 
-        console.log("added: " + participantEmail);
-        setParticipants((prevParticipants) => [...prevParticipants, participantEmail]);
-        setParticipantEmail('');
+        else {
+
+            console.log("added: " + participantEmail);
+            setParticipants((prevParticipants) => [...prevParticipants, participantEmail]);
+            setParticipantEmail('');
+        }
     }
 
     const validateTime = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -181,11 +184,11 @@ export default function CreateEventForm({ createEvent }: { createEvent: (partici
                     }
                 </div>
 
-                <CreateButton disabledCheck={participants.length === 0 ? false : false}/>
+                <CreateButton disabledCheck={participants.length === 0 ? true : false}/>
 
-                <div className="flex flex-row justify-between ml-auto mt-auto animate-in gap-2 align-middle items-center bg-white/10 border border-white/25 rounded-xl px-2 py-2">
+                <div className={`${snackBarOpen ? "block" : "hidden"} flex flex-row justify-between ml-auto mt-auto animate-in gap-2 align-middle items-center bg-white/10 border border-white/25 rounded-xl px-2 py-2`}>
                     <p className="">
-                        Snack Message!
+                        {snackBarMessage}
                     </p>
                     <button
                         onClick={() => {setSnackBarOpen(false)}}
