@@ -15,10 +15,10 @@ export function DeleteButton() {
     )
 }
 
-export default function EventCard({ event, deleteEvent }: { event: Event; deleteEvent: (eventId: string, formData: FormData) => Promise<void> }) {
+export default function EventCard({ event, deleteEvent }: { event: Event; deleteEvent: (event: Event, formData: FormData) => Promise<void> }) {
 
     // this is probably being reinitialized on every re-render ??
-    const deleteEventWithId = deleteEvent.bind(null, event.event_id);
+    const deleteEventWithId = deleteEvent.bind(null, event);
 
     return (
         <div className="text-base font-light flex flex-col py-3 px-5 bg-gradient-to-b from-white/40 via-white/30 to-white/20 rounded-xl backdrop-blur-xlrounded-xl shadow-lg backdrop-blur-xl">
