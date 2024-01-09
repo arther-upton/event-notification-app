@@ -156,6 +156,9 @@ export default function CreateEventForm({ createEvent }: { createEvent: (partici
                 <label className="text-lg font-semibold" htmlFor="participant">
                     Participants
                 </label>
+                <p className="max-w-xs font-extralight">
+                    Enter email and click the '+' button
+                </p>
                 <div className="flex items-center w-full gap-2">
                     <input
                         className="w-full rounded-md px-4 py-2 bg-inherit border-2 border-white/25 placeholder-white placeholder-opacity-50 focus:outline-purple-300"
@@ -186,7 +189,7 @@ export default function CreateEventForm({ createEvent }: { createEvent: (partici
 
                 <CreateButton disabledCheck={participants.length === 0 ? true : false}/>
 
-                <div className={`${snackBarOpen ? "block" : "hidden"} flex flex-row justify-between ml-auto mt-auto animate-in gap-2 align-middle items-center bg-white/10 border border-white/25 rounded-xl px-2 py-2`}>
+                <div className={`${snackBarOpen ? "block" : "hidden"} flex flex-row justify-between ml-auto mt-auto animate-in gap-2 align-middle items-center bg-white/10 border border-white/25 rounded-xl px-3 py-2`}>
                     <p className="">
                         {snackBarMessage}
                     </p>
