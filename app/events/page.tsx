@@ -5,6 +5,8 @@ import { redirect } from 'next/navigation';
 import EventCard from '@/components/EventCard';
 import { Event } from '@/utils/types';
 import { PostgrestError } from '@supabase/supabase-js';
+import nodemailer from 'nodemailer';
+import { generateEmailHTML } from '@/utils/generateEmailHTML';
 
 export default async function Events() {
 
@@ -28,10 +30,10 @@ export default async function Events() {
 
   console.log(data);
 
-  const deleteEvent = async (eventId: string, formData: FormData) => {
+  const deleteEvent = async (event: Event, formData: FormData) => {
     'use server'
 
-    console.log(eventId);
+    console.log(event.event_id);
 
     const cookieStore = cookies();
     const supabase = createClient(cookieStore);
@@ -39,13 +41,42 @@ export default async function Events() {
     const { error } = await supabase
       .from('event')
       .delete()
-      .eq('event_id', eventId);
+      .eq('event_id', event.event_id);
 
     if (error) {
       console.log(error);
       return redirect('/events?message=Event deletion failed');
     }
 
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.GOOGLE_EMAIL,
+        pass: process.env.GOOGLE_PASSWORD,
+      },
+    });
+
+    const mailOptions = {
+      from: process.env.GOOGLE_EMAIL,
+      to: event.participants.join(', '),
+      subject: "Eventify Event Cancellation",
+      text: `${event.title} has been cancelled.`,
+      html: generateEmailHTML("cancellation", event.title, "", event.venue, "", "", new Date(event.date_time)),
+    };
+
+    await new Promise((resolve, reject) => {
+      transporter.sendMail(mailOptions, (err, response) => {
+        if (err) {
+          console.log(err);
+          reject(err);
+          return redirect('/create?message=Cancellation Notification Failed');
+        } else {
+          console.log(response);
+          resolve(response);
+        }
+      });
+    });
+    
     return redirect('events');
   }
 

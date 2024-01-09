@@ -76,7 +76,7 @@ export default async function Create() {
         to: participants.join(', '),
         subject: `Eventify Invitation: ${title}`,
         text: `${user.email} is inviting you to an Eventify event.`,
-        html: generateEmailHTML(title, user.email, venue, venueType, link, eventDate),
+        html: generateEmailHTML("invitation", title, user.email, venue, venueType, link, eventDate),
       };
 
       await new Promise((resolve, reject) => {
