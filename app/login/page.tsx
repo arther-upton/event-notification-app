@@ -106,6 +106,8 @@ export default function Login({
             name="password"
             placeholder="••••••••"
             required
+            minLength={8}
+            maxLength={12}
           />
           <button className="bg-orange-600 rounded-md px-4 py-2 text-foreground mb-2">
             Sign In
