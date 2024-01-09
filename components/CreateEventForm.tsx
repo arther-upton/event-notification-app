@@ -1,6 +1,18 @@
 'use client'
 
 import { useState } from 'react';
+import { useFormStatus } from 'react-dom';
+
+export function CreateButton() {
+
+    const { pending } = useFormStatus();
+
+    return (
+        <button type="submit" aria-disabled={pending} disabled={pending} className="bg-orange-600 rounded-md px-4 py-2 text-foreground mb-2 disabled:bg-slate-600/20">
+            {pending ? "Creating...": "Create"}
+        </button>
+    )
+}
 
 export default function CreateEventForm({ createEvent }: { createEvent: (participants: string[], clientTimestamp: string, formData: FormData) => Promise<void> }) {
 
@@ -142,9 +154,7 @@ export default function CreateEventForm({ createEvent }: { createEvent: (partici
                     }
                 </div>
 
-                <button className="bg-orange-600 rounded-md px-4 py-2 text-foreground mb-2">
-                    Create
-                </button>
+                <CreateButton />
             </div>
         </form>
     )

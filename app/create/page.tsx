@@ -121,7 +121,7 @@ export default async function Create() {
         Back
       </Link>
 
-      <div className="flex flex-col py-8 px-10 justify-center gap-2 mt-28 bg-gradient-to-b from-white/40 via-white/30 to-white/20 rounded-xl shadow-lg backdrop-blur-xl">
+      <div className="flex flex-col py-8 px-10 justify-center gap-2 my-28 bg-gradient-to-b from-white/40 via-white/30 to-white/20 rounded-xl shadow-lg backdrop-blur-xl">
         <p className="text-3xl font-bold text-white">
           Create Event
         </p>

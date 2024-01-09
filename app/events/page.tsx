@@ -2,6 +2,9 @@ import Link from 'next/link';
 import { cookies } from 'next/headers';
 import { createClient } from '@/utils/supabase/server';
 import { redirect } from 'next/navigation';
+import EventCard from '@/components/EventCard';
+import { Event } from '@/utils/types';
+import { PostgrestError } from '@supabase/supabase-js';
 
 export default async function Events() {
 
@@ -14,7 +17,7 @@ export default async function Events() {
     redirect('/login');
   }
 
-  const { data, error } = await supabase
+  const { data, error }: {data: Event[] | null; error: PostgrestError | null} = await supabase
     .from('event')
     .select()
     .eq('user_id', user.id);
@@ -69,44 +72,11 @@ export default async function Events() {
         Back
       </Link>
 
-      <div className="w-[90vw] mt-28 h-full grid grid-cols-3 gap-4">
+      <div className="w-[90vw] my-28 h-full grid grid-cols-3 gap-4">
         {
-          data?.map((event, index: number) => {
+          data?.map((event: Event, index: number) => {
             return (
-              <div key={index} className="text-base font-light flex flex-col py-3 px-5 bg-gradient-to-b from-white/40 via-white/30 to-white/20 rounded-xl backdrop-blur-xlrounded-xl shadow-lg backdrop-blur-xl">
-                <div className="flex flex-row justify-between align-middle items-center mb-2">
-                  <p className="text-xl font-bold">{event.title}</p>
-                  <p className="text-sm font-light">{(new Date(event.date_time)).toDateString()}{' '}{(new Date(event.date_time)).toLocaleString([], {hour: '2-digit', minute: '2-digit'})}</p>
-                </div>
-                {
-                  event.description.length > 0 ?
-                    <p className="align-middle items-center"><span className="font-semibold">About:</span> {event.description}</p>
-                    : <></>
-                }
-                <p className="align-middle items-center mb-2"><span className="font-semibold">Venue:</span> {event.venue}</p>
-                {
-                  event.link.length > 0 ?
-                    <p>Link: {event.link}</p>
-                    : <></>
-                }
-                <p className="font-semibold mb-1">Invitees:</p>
-                <div className="w-full grid grid-cols-2 gap-2 mb-6">
-                  {
-                    event.participants.map((p: string, index: number) =>
-                      <p key={index}
-                        className="bg-white/10 border border-white/25 text-center text-xs py-1 px-1 rounded-md"
-                      >
-                        {p}
-                      </p>
-                    )
-                  }
-                </div>
-                <form action={deleteEvent.bind(null, event.event_id)} className="mt-auto">
-                  <button className="w-full font-normal rounded-md px-4 py-2 text-foreground bg-purple-500/75">
-                    Cancel Event
-                  </button>
-                </form>
-              </div>
+              <EventCard key={index} event={event} deleteEvent={deleteEvent}/>
             )
           })
         }
