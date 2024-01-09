@@ -1,30 +1,10 @@
-import DeployButton from '../components/DeployButton'
-import ConnectSupabaseSteps from '@/components/ConnectSupabaseSteps'
-import SignUpUserSteps from '@/components/SignUpUserSteps'
-import Header from '@/components/Header'
 import Link from 'next/link'
 import NavItems from '../components/NavItems'
-import { createClient } from '@/utils/supabase/server'
-import { cookies } from 'next/headers'
 import GithubIcon from '@/components/GithubIcon'
 import SupabaseLogo from '@/components/SupabaseLogo'
 import EventifyLogo from '@/components/EventifyLogo'
 
 export default async function Index() {
-  const cookieStore = cookies()
-
-  const canInitSupabaseClient = () => {
-    // This function is just for the interactive tutorial.
-    // Feel free to remove it once you have Supabase connected.
-    try {
-      createClient(cookieStore)
-      return true
-    } catch (e) {
-      return false
-    }
-  }
-
-  const isSupabaseConnected = canInitSupabaseClient()
 
   return (
     <div className="flex-1 w-full flex flex-col items-center">
@@ -33,7 +13,7 @@ export default async function Index() {
           <div>
             <EventifyLogo />
           </div>
-          {isSupabaseConnected && <NavItems />}
+          <NavItems />
         </div>
       </nav>
       <div className="max-xl:gap-5 flex flex-row py-8 pl-16 w-[90vw] h-[90vh] my-10 justify-center bg-white/20 rounded-xl ring-1 ring-gray-600/5 backdrop-blur-xl">
